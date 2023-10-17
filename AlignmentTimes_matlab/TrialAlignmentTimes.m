@@ -1,4 +1,4 @@
-function [Alignment_Times] = TrialStartAlignmentTimes(xds, target_dir, target_center)
+function [Alignment_Times] = TrialAlignmentTimes(xds, target_dir, target_center, event)
 
 %% Indexes for rewarded trials
 
@@ -6,16 +6,16 @@ function [Alignment_Times] = TrialStartAlignmentTimes(xds, target_dir, target_ce
 
 %% Loops to extract only rewarded trials
 
-% Go-cue's for succesful trials
+temp_event = extractAfter(event, 'trial_');
+trial_idx = contains(xds.trial_info_table_header, temp_event);
+% Time's for succesful trials
 Alignment_Times = zeros(height(rewarded_idxs),1);
 for ii = 1:height(rewarded_idxs)
-    Alignment_Times(ii) = xds.trial_start_time(rewarded_idxs(ii));
+    Alignment_Times(ii) = cell2mat(xds.trial_info_table(rewarded_idxs(ii), trial_idx));
 end
 
 % Round to match the neural bin size
 Alignment_Times = round(Alignment_Times, abs(floor(log10(xds.bin_width))));
-
-
 
 
 
