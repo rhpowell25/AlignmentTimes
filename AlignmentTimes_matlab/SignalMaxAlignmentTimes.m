@@ -1,11 +1,5 @@
 function [Alignment_Times] = SignalMaxAlignmentTimes(xds, target_dir, target_center, event)
 
-%% Basic settings, some variable extractions, & definitions
-
-% Window to calculate the cursor onset
-half_window_size = 1; % Bins
-step_size = 1; % Bins
-
 %% Extract the signal corresponding to the event
 [Signal, Timing] = Extract_Signal(xds, target_dir, target_center, event);
 
